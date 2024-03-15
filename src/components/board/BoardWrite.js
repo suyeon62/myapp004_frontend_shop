@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { boardActions } from "../../toolkit/actions/board_action";
 
 const BoardWrite = () => {
   const dispatch = useDispatch();
-
   const navigator = useNavigate();
+  const { num } = useParams();
 
   const [inputs, setInputs] = useState({
     subject: "",
@@ -16,6 +16,10 @@ const BoardWrite = () => {
 
   //할당을 통해 subject로 접근 가능 (inputs.subject와 같이 접근하지 x)
   const { subject, content, filename } = inputs;
+  const boardDetail = useSelector((state) => state.board.boardDetail);
+  const pv = useSelector((state) =>
+    state.board.pv ? state.board.pv : { currentPage: 1 }
+  );
 
   const handleValueChange = (e) => {
     // let nextState = {};
@@ -42,8 +46,16 @@ const BoardWrite = () => {
     formData.append("content", content);
 
     if (filename != null) formData.append("filename", filename);
+    //console.log("formData", subject, content); //데이터 확인용
 
-    console.log("formData", subject, content);
+    //답변글이면
+    if (num !== undefined) {
+      formData.append("num", boardDetail.num);
+      formData.append("ref", boardDetail.ref);
+      formData.append("re_step", boardDetail.re_step);
+      formData.append("re_level", boardDetail.re_level);
+    }
+
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -58,7 +70,7 @@ const BoardWrite = () => {
       filename: null,
     });
 
-    navigator(`/board/list/1`);
+    navigator(`/board/list/${num ? pv.currentPage : 1}`);
   };
 
   return (
@@ -81,8 +93,8 @@ const BoardWrite = () => {
                   type="text"
                   name="subject"
                   size="40"
+                  placeholder={num !== undefined ? "답변" : null}
                   onChange={handleValueChange}
-                  //   placeholder={num !== undefined ? "답변" : null}
                 />
               </td>
             </tr>

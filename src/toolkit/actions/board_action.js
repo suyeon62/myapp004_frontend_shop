@@ -2,7 +2,7 @@ import axios from "axios";
 import { boardReducers } from "../createSlice/board_createSlice";
 
 function getBoardList(currentPage) {
-  console.log(currentPage);
+  //console.log(currentPage);
   return async (dispatch) => {
     const data = await axios
       .get(`/board/list/${currentPage}`)
@@ -31,4 +31,40 @@ function getBoardDetail(num) {
   };
 }
 
-export const boardActions = { getBoardList, getBoardWrite, getBoardDetail };
+//첨부파일 다운로드
+function getBoardDownload(upload) {
+  return async (dispatch) => {
+    const data = await axios
+      .get(`/board/contentdownload/${upload}`)
+      .then((response) => response.data);
+    //dispatch(boardActions.getBoardDownload(data));
+    return data;
+  };
+}
+
+//수정하기
+function getBoardUpdate(formData, config) {
+  return async () => {
+    await axios
+      .put(`/board/update`, formData, config)
+      .then((response) => response.data);
+  };
+}
+
+//삭제하기
+function getBoardDelete(num) {
+  return async () => {
+    await axios
+      .delete(`/board/delete/${num}`)
+      .then((response) => response.data);
+  };
+}
+
+export const boardActions = {
+  getBoardList,
+  getBoardWrite,
+  getBoardDetail,
+  getBoardDownload,
+  getBoardUpdate,
+  getBoardDelete,
+};

@@ -57,6 +57,8 @@ const BoardList = () => {
             })}
         </tbody>
       </table>
+
+      {/* 페이지 번호 */}
       {pv && <PageNavigation getBoardList={getBoardList} />}
     </div>
   );
