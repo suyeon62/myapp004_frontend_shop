@@ -6,6 +6,10 @@ import Home from "./components/Home";
 import BoardWrite from "./components/board/BoardWrite";
 import BoardView from "./components/board/BoardView";
 import BoardUpdate from "./components/board/BoardUpdate";
+import JoinAdd from "./components/members/JoinAdd";
+import Login from "./components/members/Login";
+import Logout from "./components/members/Logout";
+import EditInfo from "./components/members/EditInfo";
 
 function App() {
   return (
@@ -14,6 +18,12 @@ function App() {
       <Routes>
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<Home />} />
+
+          <Route path="login" element={<Login />} />
+          <Route path="joinadd" element={<JoinAdd />} />
+          <Route path="logout" element={<Logout />} />
+          <Route path="editinfo" element={<EditInfo />} />
+
           <Route path="board/list/:currentPage" element={<BoardList />} />
           <Route path="board/write" element={<BoardWrite />} />
           <Route path="board/write/:num" element={<BoardWrite />} />

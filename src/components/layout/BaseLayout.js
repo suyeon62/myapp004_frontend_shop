@@ -13,11 +13,59 @@ const BaseLayout = () => {
         <div className="container-fluid">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/">
+              <NavLink style={activeStyle} className="nav-link" to="/">
                 홈
               </NavLink>
             </li>
-            <li className="nav=item">
+
+            {console.log(
+              "localStorage_memberEmail",
+              localStorage.getItem("memberEmail")
+            )}
+            {localStorage.getItem("memberEmail") == null ? (
+              <>
+                <li className="nav-item">
+                  <NavLink style={activeStyle} className="nav-link" to="/login">
+                    로그인
+                  </NavLink>
+                </li>
+
+                <li className="nav-item">
+                  <NavLink
+                    style={activeStyle}
+                    className="nav-link"
+                    to="/joinadd"
+                  >
+                    회원가입
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    style={activeStyle}
+                    className="nav-link"
+                    to="/logout"
+                  >
+                    {localStorage.getItem("memberName")}
+                    <span style={{ fontSize: "10px" }}>로그아웃</span>
+                  </NavLink>
+                </li>
+
+                <li className="nav-item">
+                  <NavLink
+                    style={activeStyle}
+                    className="nav-link"
+                    to="/editinfo"
+                  >
+                    회원수정
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            <li className="nav-item">
               <NavLink
                 style={activeStyle}
                 className="nav-link"
