@@ -22,10 +22,10 @@ function getBoardWrite(formData, config) {
 }
 
 //상세페이지
-function getBoardDetail(num) {
+function getBoardDetail(num, config) {
   return async (dispatch) => {
     const data = await axios
-      .get(`/board/view/${num}`)
+      .get(`/board/view/${num}`, config)
       .then((response) => response.data);
     dispatch(boardReducers.getBoardDetail({ data }));
   };

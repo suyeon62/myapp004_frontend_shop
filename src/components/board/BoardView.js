@@ -11,8 +11,14 @@ const BoardView = () => {
   const boardDetail = useSelector((state) => state.board.boardDetail);
   const pv = useSelector((state) => state.board.pv);
 
+  const config = {
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+  };
+
   useEffect(() => {
-    dispatch(boardActions.getBoardDetail(num));
+    dispatch(boardActions.getBoardDetail(num, config));
   }, []);
 
   //첨부파일 다운로드
@@ -52,7 +58,7 @@ const BoardView = () => {
         <tbody>
           <tr>
             <th width="20%">글쓴이</th>
-            <td>null</td>
+            <td>{boardDetail.memberEmail}</td>
           </tr>
           <tr>
             <th width="20%">조회수</th>

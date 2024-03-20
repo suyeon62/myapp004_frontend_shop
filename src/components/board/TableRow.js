@@ -19,7 +19,7 @@ const TableRow = ({ board }) => {
         )}
         <Link to={`/board/view/${board.num}`}>{board.subject}</Link>
       </td>
-      <td>null</td>
+      <td>{board.memberEmail}</td>
       <td>{board.readcount}</td>
     </tr>
   );

@@ -44,6 +44,7 @@ const BoardWrite = () => {
     const formData = new FormData();
     formData.append("subject", subject);
     formData.append("content", content);
+    formData.append("memberEmail", localStorage.getItem("memberEmail"));
 
     if (filename != null) formData.append("filename", filename);
     //console.log("formData", subject, content); //데이터 확인용
@@ -59,6 +60,7 @@ const BoardWrite = () => {
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("Authorization"),
       },
     };
 
@@ -81,7 +83,12 @@ const BoardWrite = () => {
             <tr>
               <th>글쓴이</th>
               <td>
-                <input type="text" readOnly />
+                <input
+                  type="text"
+                  name="memberEmail"
+                  readOnly
+                  value={localStorage.getItem("memberEmail")}
+                />
               </td>
             </tr>
             <tr>

@@ -62,6 +62,16 @@ const BaseLayout = () => {
                     회원수정
                   </NavLink>
                 </li>
+
+                <li className="nav-item">
+                  <NavLink
+                    style={activeStyle}
+                    className="nav-link"
+                    to="/memberremove"
+                  >
+                    회원탈퇴
+                  </NavLink>
+                </li>
               </>
             )}
 
