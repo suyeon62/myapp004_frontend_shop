@@ -6,7 +6,7 @@ import { boardActions } from "../../toolkit/actions/board_action";
 const BoardView = () => {
   const { num } = useParams();
   const dispatch = useDispatch();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const boardDetail = useSelector((state) => state.board.boardDetail);
   const pv = useSelector((state) => state.board.pv);
@@ -21,11 +21,12 @@ const BoardView = () => {
     dispatch(boardActions.getBoardDetail(num, config));
   }, []);
 
-  //첨부파일 다운로드
+  // 다운로드
   const handleDownload = async () => {
     const boardFile = await dispatch(
       boardActions.getBoardDownload(boardDetail.upload)
     );
+
     const fileName = boardDetail.upload.substring(
       boardDetail.upload.indexOf("_") + 1
     );
@@ -36,7 +37,7 @@ const BoardView = () => {
     });
 
     console.log("url:", url);
-    const link = document.createElement("a"); //<a href="url" download="fileName"></a>
+    const link = document.createElement("a"); //<a></a>
     link.href = url;
     link.setAttribute("download", fileName);
     link.style.cssText = "display:none";
@@ -45,11 +46,11 @@ const BoardView = () => {
     link.remove();
   };
 
-  //삭제버튼
-  const handleDelete = async (e) => {
+  // 삭제버튼
+  const handelDelete = async (e) => {
     e.preventDefault();
     await dispatch(boardActions.getBoardDelete(num));
-    navigator(`/board/list/${pv.currentPage}`); //navigate
+    navigate(`/board/list/${pv.currentPage}`);
   };
 
   return (
@@ -66,25 +67,25 @@ const BoardView = () => {
           </tr>
           <tr>
             <th>제목</th>
-            <td colSpan="3">{boardDetail.subject}</td>
+            <td calSpan="3">{boardDetail.subject}</td>
           </tr>
           <tr>
             <th>메일</th>
-            <td colSpan="3">{boardDetail.memberEmail}</td>
+            <td calSpan="3">{boardDetail.memberEmail}</td>
           </tr>
           <tr>
             <th>내용</th>
-            <td colSpan="3" style={{ whiteSpace: "pre-line" }}>
+            <td calSpan="3" style={{ whiteSpace: "pre-line" }}>
               {boardDetail.content}
             </td>
           </tr>
           <tr>
             <th>첨부파일</th>
-            <td colSpan="3">
+            <td calspan="3">
               <button onClick={handleDownload}>
                 {boardDetail.upload &&
                   boardDetail.upload.substring(
-                    boardDetail.upload.indexOf("_") + 1
+                    boardDetail.upload.indexOf("-") + 1
                   )}
               </button>
             </td>
@@ -98,12 +99,17 @@ const BoardView = () => {
       <Link className="btn btn-primary" to={`/board/write/${num}`}>
         답변
       </Link>
-      <Link className="btn btn-primary" to={`/board/update/${num}`}>
-        수정
-      </Link>
-      <button className="btn btn-primary" onClick={handleDelete}>
-        삭제
-      </button>
+
+      {localStorage.getItem("memberEmail") === boardDetail.memberEmail ? (
+        <>
+          <Link className="btn btn-primary" to={`/board/update/${num}`}>
+            수정
+          </Link>
+          <button className="btn btn-primary" onClick={handelDelete}>
+            삭제
+          </button>
+        </>
+      ) : null}
     </>
   );
 };

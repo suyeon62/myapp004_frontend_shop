@@ -11,6 +11,7 @@ import Login from "./components/members/Login";
 import Logout from "./components/members/Logout";
 import EditInfo from "./components/members/EditInfo";
 import MemberRemove from "./components/members/MemberRemove";
+import PrivateRoute from "./access/PrivateRoute";
 
 function App() {
   return (
@@ -20,17 +21,48 @@ function App() {
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<Home />} />
 
-          <Route path="login" element={<Login />} />
-          <Route path="joinadd" element={<JoinAdd />} />
-          <Route path="logout" element={<Logout />} />
-          <Route path="editinfo" element={<EditInfo />} />
-          <Route path="memberremove" element={<MemberRemove />} />
+          <Route
+            path="login"
+            element={<PrivateRoute isAuth={false} RouteComponent={Login} />}
+          />
+          <Route
+            path="joinadd"
+            element={<PrivateRoute isAuth={false} RouteComponent={JoinAdd} />}
+          />
+          <Route
+            path="logout"
+            element={<PrivateRoute isAuth={true} RouteComponent={Logout} />}
+          />
+          <Route
+            path="editinfo"
+            element={<PrivateRoute isAuth={true} RouteComponent={EditInfo} />}
+          />
+          <Route
+            path="memberremove"
+            element={
+              <PrivateRoute isAuth={true} RouteComponent={MemberRemove} />
+            }
+          />
 
           <Route path="board/list/:currentPage" element={<BoardList />} />
-          <Route path="board/write" element={<BoardWrite />} />
-          <Route path="board/write/:num" element={<BoardWrite />} />
-          <Route path="board/view/:num" element={<BoardView />} />
-          <Route path="board/update/:num" element={<BoardUpdate />} />
+          <Route
+            path="board/write"
+            element={<PrivateRoute isAuth={true} RouteComponent={BoardWrite} />}
+          />
+          <Route
+            path="board/write/:num"
+            element={<PrivateRoute isAuth={true} RouteComponent={BoardWrite} />}
+          />
+          <Route
+            path="board/view/:num"
+            element={<PrivateRoute isAuth={true} RouteComponent={BoardView} />}
+          />
+          <Route
+            path="board/update/:num"
+            element={
+              <PrivateRoute isAuth={true} RouteComponent={BoardUpdate} />
+            }
+          />
         </Route>
       </Routes>
     </div>
