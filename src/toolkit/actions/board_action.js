@@ -52,10 +52,10 @@ function getBoardUpdate(formData, config) {
 }
 
 //삭제하기
-function getBoardDelete(num) {
+function getBoardDelete(num, config) {
   return async () => {
     await axios
-      .delete(`/board/delete/${num}`)
+      .delete(`/board/delete/${num}`, config)
       .then((response) => response.data);
   };
 }

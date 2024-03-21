@@ -46,7 +46,9 @@ const BoardWrite = () => {
     formData.append("content", content);
     formData.append("memberEmail", localStorage.getItem("memberEmail"));
 
-    if (filename != null) formData.append("filename", filename);
+    if (filename != null) {
+      formData.append("filename", filename);
+    }
     //console.log("formData", subject, content); //데이터 확인용
 
     //답변글이면

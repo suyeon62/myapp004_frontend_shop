@@ -49,7 +49,7 @@ const BoardView = () => {
   // 삭제버튼
   const handelDelete = async (e) => {
     e.preventDefault();
-    await dispatch(boardActions.getBoardDelete(num));
+    dispatch(boardActions.getBoardDelete(num, config));
     navigate(`/board/list/${pv.currentPage}`);
   };
 

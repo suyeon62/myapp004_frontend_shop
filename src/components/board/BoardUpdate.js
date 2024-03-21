@@ -51,6 +51,7 @@ const BoardUpdate = () => {
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("Authorization"),
       },
     };
 
