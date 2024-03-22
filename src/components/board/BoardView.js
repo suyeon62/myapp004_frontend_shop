@@ -24,7 +24,7 @@ const BoardView = () => {
   // 다운로드
   const handleDownload = async () => {
     const boardFile = await dispatch(
-      boardActions.getBoardDownload(boardDetail.upload)
+      boardActions.getBoardDownload(boardDetail.upload, config)
     );
 
     const fileName = boardDetail.upload.substring(

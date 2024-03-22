@@ -12,8 +12,38 @@ import Logout from "./components/members/Logout";
 import EditInfo from "./components/members/EditInfo";
 import MemberRemove from "./components/members/MemberRemove";
 import PrivateRoute from "./access/PrivateRoute";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
+  function getTokenExpirationDate(token) {
+    const decoded = jwtDecode(token);
+    if (!decoded.exp) {
+      return null;
+    }
+
+    const date = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    date.setUTCSeconds(decoded.exp);
+    return date;
+  }
+
+  function isTokenExpired(token) {
+    const expirationDate = getTokenExpirationDate(token);
+    return expirationDate < new Date();
+  }
+
+  if (localStorage.getItem("Authorization")) {
+    //const token = '여기에_당신의_JWT_토큰을_넣으세요';
+    const token = localStorage.getItem("Authorization");
+    const expirationDate = getTokenExpirationDate(token);
+    console.log("토큰 만료 시간:", expirationDate);
+
+    if (isTokenExpired(token)) {
+      console.log("토큰이 만료되었습니다.");
+    } else {
+      console.log("토큰이 아직 유효합니다.");
+    }
+  }
+
   return (
     <div className="container">
       <h1>My Shop</h1>

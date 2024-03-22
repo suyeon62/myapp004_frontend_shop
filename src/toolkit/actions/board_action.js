@@ -32,10 +32,10 @@ function getBoardDetail(num, config) {
 }
 
 //첨부파일 다운로드
-function getBoardDownload(upload) {
+function getBoardDownload(upload, config) {
   return async (dispatch) => {
     const data = await axios
-      .get(`/board/contentdownload/${upload}`)
+      .get(`/board/contentdownload/${upload}`, config)
       .then((response) => response.data);
     //dispatch(boardActions.getBoardDownload(data));
     return data;
